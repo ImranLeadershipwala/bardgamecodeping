@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ping Pong Game</title>
+  <style>
+    body {
+      background-color: black;
+    }
+    
+    .game-board {
+      width: 500px;
+      height: 200px;
+      border: 1px solid white;
+    }
+    
+    .paddle {
+      width: 100px;
+      height: 20px;
+      background-color: white;
+    }
+    
+    .ball {
+      width: 20px;
+      height: 20px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-board">
+    <div class="paddle" id="paddle-1"></div>
+    <div class="paddle" id="paddle-2"></div>
+    <div class="ball"></div>
+  </div>
+  <script>
+    function movePaddle(id, direction) {
+      var paddle = document.getElementById(id);
+      paddle.style.top = paddle.style.top + direction + "px";
+    }
+    
+    function startGame() {
+      var ball = document.getElementsByClassName("ball")[0];
+      var paddle1 = document.getElementById("paddle-1");
+      var paddle2 = document.getElementById("paddle-2");
+      
+      ball.style.left = Math.random() * (500 - 20) + 10;
+      ball.style.top = Math.random() * (200 - 20) + 10;
+      
+      var xSpeed = Math.random() * 2 - 1;
+      var ySpeed = Math.random() * 2 - 1;
+      
+      setInterval(function() {
+        ball.style.left = ball.style.left + xSpeed;
+        ball.style.top = ball.style.top + ySpeed;
+        
+        if (ball.style.top < 0) {
+          ySpeed = -ySpeed;
+        }
+        
+        if (ball.style.top > 200) {
+          ySpeed = -ySpeed;
+        }
+        
+        if (ball.style.left < 0 || ball.style.left > 500) {
+          // Game over!
+        }
+        
+        if (ball.style.left < paddle1.style.right && ball.style.top > paddle1.style.top && ball.style.top < paddle1.style.bottom) {
+          xSpeed = -xSpeed;
+        }
+        
+        if (ball.style.left > paddle2.style.left && ball.style.top > paddle2.style.top && ball.style.top < paddle2.style.bottom) {
+          xSpeed = -xSpeed;
+        }
+      }, 100);
+    }
+    
+    window.onload = startGame;
+  </script>
+</body>
+</html>
